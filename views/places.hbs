@@ -1,0 +1,13 @@
+{{#each placeInfo}}
+    <div id="place-info"></div>
+    <a href="http://maps.google.com/?q={{name}}" target="_blank">
+  <div id="map-box">
+    <div class="place-heading">
+      <h3>{{name}}</h3>
+      <img class="place-icon" src="{{icon}}" alt="icon for retaurant">
+    </div>
+      <p>{{address}}</p>
+  </div>
+</a>
+<hr>
+{{/each}}
