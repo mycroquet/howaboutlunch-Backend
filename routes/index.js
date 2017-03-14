@@ -21,7 +21,7 @@ router.get('/places', function(req, res, next) {
     console.log(req.query);
     places.getPlace({
             location: `${coords.x},${coords.y}`,
-            radius: '500',
+            radius: '1000',
             type: 'restaurant'
         })
         .then(body => res.json(body))

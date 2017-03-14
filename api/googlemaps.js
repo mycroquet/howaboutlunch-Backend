@@ -6,14 +6,19 @@ const ENDPOINT = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?k
 
   function filterInfo(obj) {
       return obj.results.map(function (place){
+        console.log('HELLO');
+        console.log(place);
         return {
           name: place.name,
+          type: place.types,
           address: place.vicinity,
           location: place.geometry.location,
-          icon: place.icon,
-          placeId: place.place_id
+          price_level: place.price_level,
+          rating: place.rating,
+          open_now: place.opening_hours.open_now,
+          placeId: place.place_id,
+          website: place.website
         }
-        console.log('HELLO');
       })
   }
 
