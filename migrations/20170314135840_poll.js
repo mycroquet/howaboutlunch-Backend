@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.text('title').notNullable();
     table.text('poll_url').unique().notNullable();
-    table.boolean('enabled').notNullable();
+    table.boolean('enabled').defaultTo('No').notNullable();
     table.integer('user_id').references('user.id').onDelete('CASCADE');
   })
 };
