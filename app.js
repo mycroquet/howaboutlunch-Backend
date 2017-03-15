@@ -23,7 +23,7 @@ app.use('/api/v1', users);
 
 app.use('*', function (req, res) {
   res.sendFile('index.html', {
-    root: path.join(__dirname, local)
+    root: path.join(__dirname, 'howaboutlunch/')
   })
 })
 
