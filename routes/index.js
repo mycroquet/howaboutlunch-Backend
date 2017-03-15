@@ -3,7 +3,7 @@ var router = express.Router();
 var bodyParser = require("body-parser");
 
 var places = require('../api/googlemaps');
-var knex = require('.db/db_connection')
+var knex = require('../db/db_connection')
 
 
 /* GET home page. */
