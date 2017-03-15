@@ -16,7 +16,7 @@ const production = 'howaboutlunch.firebaseapp.com/'
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, local + '/app')));
+app.use(express.static(path.join(__dirname, local)));
 
 app.use('/api/v1', index);
 app.use('/api/v1', users);
@@ -28,7 +28,7 @@ app.use('*', function (req, res) {
 })
 
 
-app.use(function(err, req, res, next) {                       
+app.use(function(err, req, res, next) {
   const response = { message: err.message }
   if (req.app.get('env') === 'development') {
     response.stack = err.stack
