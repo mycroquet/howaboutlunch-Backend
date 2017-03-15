@@ -9,23 +9,22 @@ const users = require('./routes/users');
 
 const app = express();
 
-const local = 'localhost:3000/'
 const production = 'howaboutlunch.firebaseapp.com/'
 
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, local)));
+//app.use(express.static(path.join(__dirname, 'local')));
 
 app.use('/api/v1', index);
 app.use('/api/v1', users);
 
-app.use('*', function (req, res) {
-  res.sendFile('index.html', {
-    root: path.join(__dirname, 'howaboutlunch/')
-  })
-})
+// app.use('*', function (req, res) {
+//   res.sendFile('index.html', {
+//     root: path.join(__dirname, 'howaboutlunch/')
+//   })
+// })
 
 
 app.use(function(err, req, res, next) {
