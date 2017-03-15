@@ -6,7 +6,7 @@ const ENDPOINT = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?k
 
   function filterInfo(obj) {
       return obj.results.map(function (place){
-        console.log('HELLO');
+        
         console.log(place);
         return {
           name: place.name,
