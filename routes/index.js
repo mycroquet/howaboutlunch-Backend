@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var bodyParser = require("body-parser");
+var bodyParser = require('body-parser');
 
 var places = require('../api/googlemaps');
-var knex = require('../db/db_connection')
+var knex = require('../db/db_connection');
 
 
 /* GET home page. */
@@ -19,7 +19,7 @@ router.get('/places', function(req, res, next) {
         x: req.query.latitude,
         y: req.query.longitude
     }
-    console.log(req.query);
+
     places.getPlace({
             location: `${coords.x},${coords.y}`,
             radius: '1000',

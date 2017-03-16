@@ -6,7 +6,7 @@ const ENDPOINT = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?k
 
   function filterInfo(obj) {
       return obj.results.map(function (place){
-        
+
         console.log(place);
         return {
           name: place.name,
@@ -16,8 +16,7 @@ const ENDPOINT = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?k
           price_level: place.price_level,
           rating: place.rating,
           open_now: place.opening_hours.open_now,
-          placeId: place.place_id,
-          website: place.website
+          placeId: place.place_id
         }
       })
   }
