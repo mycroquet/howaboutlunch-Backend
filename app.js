@@ -3,6 +3,7 @@ const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
@@ -17,6 +18,9 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'local')));
 
+// CORS
+app.use(cors());
+
 app.use('/api/v1', index);
 app.use('/api/v1', users);
 
@@ -26,12 +30,7 @@ app.use('/api/v1', users);
 //   })
 // })
 
-// CORS
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-})
+
 
 app.use(function(err, req, res, next) {
   const response = { message: err.message }
