@@ -15,7 +15,7 @@ var yelp = new Yelp({
   client_token: process.env.APP_SECRET,
   access_token: process.env.ACCESS_TOKEN
 });
-console.log(yelp.ACCESS_TOKEN);
+console.log(process.env.ACCESS_TOKEN);
 
 
 
@@ -42,14 +42,19 @@ function filterInfo(obj) {
 
 const getPlace = function(queryObj)    {
       let url = makeURL(ENDPOINT, queryObj);
-      // let url = `${ENDPOINT}&location=${queryObj.location}&radius=${queryObj.radius}&type=${queryObj.type}`
+      // let url = `${ENDPOINT}&location=${queryObj.location}&radius=${queryObj.radius}&term=${queryObj.term}`
 
       console.log(url);
         return new Promise(function(resolve, reject)   {
-            request(url, function(err, res, body)   {
+            request({
+              url,
+              headers: {
+                Authorization: "Bearer " + process.env.ACCESS_TOKEN
+              }
+            }, function(err, res, body)   {
                 if (!err)   {
-                  //resolve(JSON.parse(body))
-                    resolve(filterInfo(JSON.parse(body)));
+                  resolve(JSON.parse(body))
+                    //resolve(filterInfo(JSON.parse(body)));
                 }   else    {
                     reject(err)
                 }

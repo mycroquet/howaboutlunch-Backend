@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 
 var places = require('../api/googlemaps');
 var knex = require('../db/db_connection');
-var yelp = require('../api/yelp').yelp;
+var yelp = require('../api/yelp');
 
 
 
@@ -18,24 +18,25 @@ router.get('/', function(req, res, next) {
 /* GET nearby restaurants */
 router.get('/places', function(req, res, next) {
 
-    yelp.search({
+    yelp.getPlace({
             term: 'food',
             latitude: req.query.latitude,
             longitude: req.query.longitude,
-            radius: 10000,
-            id: process.env.APP_ID,
-            field: process.env.ACCESS_TOKEN
-
+            radius: '500'
+            // id: process.env.APP_ID,
+            // field: process.env.ACCESS_TOKEN
         })
         .then(function(data) {
-            // console.log(data); // print the data returned from the API call
-            var jsonString = JSON.stringify(data); // convert data to JSON string
-            jsonBussObj = JSON.parse(jsonString).businesses; // Parse JSON string to JSON Object
-            console.log(jsonBussObj); // Print each business JSON object
-            var l = jsonBussObj.length; // Print length
+          res.json(data)
+            // // console.log(data); // print the data returned from the API call
+            // var jsonString = JSON.stringify(data); // convert data to JSON string
+            // jsonBussObj = JSON.parse(jsonString).businesses; // Parse JSON string to JSON Object
+            // console.log(jsonBussObj); // Print each business JSON object
+            // var l = jsonBussObj.length; // Print length
         })
         .catch(function(err) {
             console.error(err);
+            next(err)
         });
 
     // places.getPlace({
