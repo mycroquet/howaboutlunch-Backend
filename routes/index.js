@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 
 var places = require('../api/googlemaps');
 var knex = require('../db/db_connection');
-var yelp = require('../api/yelp.js').yelp;
+var yelp = require('../api/yelp').yelp;
 
 
 
