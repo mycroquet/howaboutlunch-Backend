@@ -1,5 +1,5 @@
 // Request API access: http://www.yelp.com/developers/getting_started/api_access
-require('dotenv').config()
+require('dotenv').config();
 const request = require("request");
 const makeURL = require("./helpers/makeurl")
 const Yelp = require('yelp');
@@ -15,6 +15,7 @@ var yelp = new Yelp({
   client_token: process.env.APP_SECRET,
   access_token: process.env.ACCESS_TOKEN
 });
+console.log(yelp.ACCESS_TOKEN);
 
 
 
