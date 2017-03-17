@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
-var Yelp = require('yelp');
+var yelp = require('yelp');
 
 var places = require('../api/googlemaps');
 var knex = require('../db/db_connection');
