@@ -22,7 +22,6 @@ router.get('/places', function(req, res, next) {
             term: 'food',
             latitude: req.query.latitude,
             longitude: req.query.longitude,
-            location: `,${coords.y}`,
             radius: 10000,
             id: process.env.APP_ID,
             field: process.env.ACCESS_TOKEN
