@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
-var yelp = require('../api/yelp.js').yelp;
 
 var places = require('../api/googlemaps');
 var knex = require('../db/db_connection');
+var yelp = require('../api/yelp.js').yelp;
 
 
 
@@ -17,14 +17,12 @@ router.get('/', function(req, res, next) {
 
 /* GET nearby restaurants */
 router.get('/places', function(req, res, next) {
-    let coords = {
-        x: req.query.latitude,
-        y: req.query.longitude
-    }
 
     yelp.search({
             term: 'food',
-            location: `${coords.x},${coords.y}`,
+            latitude: req.query.latitude,
+            longitude: req.query.longitude,
+            location: `,${coords.y}`,
             id: process.env.APP_ID,
             field: process.env.ACCESS_TOKEN
 
