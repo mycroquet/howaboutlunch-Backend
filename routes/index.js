@@ -24,7 +24,9 @@ router.get('/places', function(req, res, next) {
 
     yelp.search({
             term: 'food',
-            location: `${coords.x},${coords.y}`
+            location: `${coords.x},${coords.y}`,
+            id: process.env.APP_ID,
+            field: process.env.ACCESS_TOKEN
 
         })
         .then(function(data) {
