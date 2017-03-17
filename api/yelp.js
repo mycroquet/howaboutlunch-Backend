@@ -57,5 +57,5 @@ const getPlace = function(queryObj)    {
     }
 
 module.exports = {
-  getPlace
+  getPlace, yelp
 }
