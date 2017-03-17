@@ -2,7 +2,7 @@
 require('dotenv').config()
 const request = require("request");
 const makeURL = require("./helpers/makeurl")
-const yelp = require('yelp');
+const Yelp = require('yelp');
 
 const ENDPOINT = 'https://api.yelp.com/v3/businesses/search'
 
