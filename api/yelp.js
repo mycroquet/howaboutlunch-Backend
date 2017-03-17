@@ -4,7 +4,7 @@ const request = require("request");
 const makeURL = require("./helpers/makeurl")
 const Yelp = require('yelp');
 
-const ENDPOINT = 'https://api.yelp.com/v3/businesses/{id}'
+const ENDPOINT = 'https://api.yelp.com/v3/businesses/search'
 
 var yelp = new Yelp({
   consumer_key: process.env.CONSUMER_KEY,
