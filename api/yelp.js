@@ -16,6 +16,8 @@ var yelp = new Yelp({
   access_token: process.env.ACCESS_TOKEN
 });
 
+
+
 function filterInfo(obj) {
     return obj.results.map(function (place){
 
