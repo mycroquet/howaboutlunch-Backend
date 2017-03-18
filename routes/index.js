@@ -23,30 +23,16 @@ router.get('/places', function(req, res, next) {
             latitude: req.query.latitude,
             longitude: req.query.longitude,
             radius: '500'
-            // id: process.env.APP_ID,
-            // field: process.env.ACCESS_TOKEN
+                // id: process.env.APP_ID,
+                // field: process.env.ACCESS_TOKEN
         })
         .then(function(data) {
-          res.json(data)
-            // // console.log(data); // print the data returned from the API call
-            // var jsonString = JSON.stringify(data); // convert data to JSON string
-            // jsonBussObj = JSON.parse(jsonString).businesses; // Parse JSON string to JSON Object
-            // console.log(jsonBussObj); // Print each business JSON object
-            // var l = jsonBussObj.length; // Print length
+            res.json(data)
         })
         .catch(function(err) {
             console.error(err);
             next(err)
         });
-
-    // places.getPlace({
-    //         location: `${coords.x},${coords.y}`,
-    //         categories: 'restaurant'
-    //     })
-    //     .then(body => res.json(body))
-    //     .catch(err => {
-    //       err
-    //     })
 })
 
 

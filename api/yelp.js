@@ -22,6 +22,7 @@ console.log(process.env.ACCESS_TOKEN);
 function filterInfo(obj) {
     return obj.results.map(function (place){
 
+
       console.log(place);
       return {
         name: place.name,
@@ -32,7 +33,7 @@ function filterInfo(obj) {
         address: place.location.display_address,
         phone: place.phone,
         price: place.price,
-        rating: place.rating,
+        stars: place.rating,
         is_closed: place.is_closed,
         id: place.id
       }
