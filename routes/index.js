@@ -1,19 +1,55 @@
 var express = require('express');
+var knex = require('../db/db_connection');
 var router = express.Router();
 var bodyParser = require('body-parser');
-
+var setCookie = require('../api/helpers/set-cookie.js');
+var userModel = require('../model/user');
+var bcrypt = require('bcrypt');
 var places = require('../api/googlemaps');
-var knex = require('../db/db_connection');
 var yelp = require('../api/yelp');
 
 
+// /* GET home page. */
+// router.get('/', function(req, res, next) {
+//     res.render('index', {
+//         title: 'Express'
+//     });
+// });
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('index', {
-        title: 'Express'
-    });
+/* User Login */
+router.post('/login', function(req, res, next) {
+    if (!req.body.password || req.body.password.length < 5) {
+        return res.json({
+            errorMessage: 'Email or password is not valid'
+        });
+    }
+
+    var email = req.body.email
+    var password = req.body.password
+
+    userModel.validLogIn(email, password)
+        .then(function(result) {
+            console.log(result);
+            console.log('WTF');
+            if (email == result[0].email && bcrypt.compareSync(password, result[0].password)) {
+                setCookie(res, {
+                    email: email
+                }).then(function() {
+                    let id = req.cookies.userID
+                    res.redirect(`/users/${id}`);
+                }).catch(function(err) {
+                   res.redirect('/');
+                });
+            } else {
+                res.redirect('/')
+            }
+        })
 });
+
+router.get('/logout', function(req, res, next) {
+    res.clearCookie('userId')
+    res.redirect('/')
+})
 
 /* GET nearby restaurants */
 router.get('/places', function(req, res, next) {
@@ -23,8 +59,6 @@ router.get('/places', function(req, res, next) {
             latitude: req.query.latitude,
             longitude: req.query.longitude,
             radius: '500'
-                // id: process.env.APP_ID,
-                // field: process.env.ACCESS_TOKEN
         })
         .then(function(data) {
             res.json(data)

@@ -21,8 +21,8 @@ app.use(cookieParser());
 // CORS
 app.use(cors());
 
-app.use('/api/v1', index);
-app.use('/api/v1', users);
+app.use('/', index);
+app.use('/users', users);
 
 // app.use('*', function (req, res) {
 //   res.sendFile('index.html', {
