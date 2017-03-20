@@ -18,11 +18,9 @@ var yelp = require('../api/yelp');
 
 /* User Login */
 router.post('/login', function(req, res, next) {
-    if (!req.body.password || req.body.password.length < 5) {
-        return res.json({
-            errorMessage: 'Email or password is not valid'
-        });
-    }
+    if (!req.body.password || req.body.password.length < 4) {
+        return res.json({errorMessage: 'Email or password is not valid'});
+      }
 
     var email = req.body.email
     var password = req.body.password
@@ -30,15 +28,15 @@ router.post('/login', function(req, res, next) {
     userModel.validLogIn(email, password)
         .then(function(result) {
             console.log(result);
-            console.log('WTF');
             if (email == result[0].email && bcrypt.compareSync(password, result[0].password)) {
                 setCookie(res, {
                     email: email
                 }).then(function() {
                     let id = req.cookies.userID
+                    console.log(id);
                     res.redirect(`/users/${id}`);
                 }).catch(function(err) {
-                   res.redirect('/');
+                   res.redirect('home');
                 });
             } else {
                 res.redirect('/')

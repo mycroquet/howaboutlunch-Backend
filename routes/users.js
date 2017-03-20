@@ -11,19 +11,15 @@ var setCookie = require('../api/helpers/set-cookie');
 // });
 
 router.get('/', function(req, res, next) {
-  console.log('Inside User route');
+    console.log('Inside User route');
     userModel.userProfile(req.body.email).then(function(result) {
         res.json(result)
     })
 });
 
-/* Load Profile and set cookie*/
-router.get('/:id', function(req, res, next) {
-    if (req.cookies.userId !== req.params.id) {
-        let realId = req.cookies.userId;
-        !!realId ? res.redirect(`/users/${realId}`) : res.redirect('/');
-    }
-    userModel.getUser(req.params.id)
+/* Load Profile info*/
+router.get('/profile', function(req, res, next) {
+    userModel.userProfile(req.params.id)
         .then(email => {
             userModel.userProfile(email[0].email)
                 .then(results => {
@@ -36,15 +32,10 @@ router.get('/:id', function(req, res, next) {
 
 
 /* Create User */
-router.post('/', function(req, res, next) {
-    if (!req.body.password || req.body.password.length < 5) {
-        res.status(500).send({
-            message: 'Password not long enough! Must be more than 5 characters'
-        });
-    } else {
+router.post('/signup', function(req, res, next) {
         var userInfo = {
             email: req.body.email,
-            password: bcrypt.hashSync(req.body.password)
+            password: bcrypt.hashSync(req.body.password, 10)
         }
 
         user.createUser(userInfo)
@@ -53,7 +44,7 @@ router.post('/', function(req, res, next) {
 
                 setCookie(res, {
                     profileId: userId
-                }).then(() => {
+                }).then(function() {
                     res.status(200).json({
                         userId,
                         message: 'User created!'
@@ -71,8 +62,6 @@ router.post('/', function(req, res, next) {
                     })
                 }
             })
-    }
-
 })
 
 

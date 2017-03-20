@@ -7,7 +7,7 @@ module.exports = {
             .join('poll', 'poll.user_id', '=', 'user.id')
             .select('user.id', 'user.first_name', 'user.last_name', 'user.email', 'user.company',
                 'poll.user_id', 'poll.title')
-            .where('user.email', email)
+            .where('user.email', 'mycroquet@gmail.com')
     },
     validSignUp: function(email) {
         return knex('user').where({
@@ -20,7 +20,7 @@ module.exports = {
         })
     },
     getUser: function(userID) {
-        return knex('user').select('email').where('id', userID)
+        return knex('user').select('email').where('id', 1)
     },
     getUserByEmail: function(email) {
         return knex('user').first().where('email', email);

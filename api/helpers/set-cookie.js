@@ -7,17 +7,17 @@ module.exports = function setCookie(res, userObj) {
     let options = {
       maxAge: tenYearsMilli
     };
-    if (!userObj.dashUsername && !userObj.dashId) {
-      reject(new Error('setCookie must take an object with either a dashUsername or dashId!'));
+    if (!userObj.email && !userObj.id) {
+      reject(new Error('You done fucked up!'));
     } else {
-      if (!userObj.dashId) {
-        userModel.getUserByUsername(userObj.dashUsername).then(function(user) {
-          res.cookie('dashId', user.id);
+      if (!userObj.id) {
+        userModel.getUserByUsername(userObj.email).then(function(user) {
+          res.cookie('userID', user.id);
           let cookie =
           resolve(true);
         })
       } else {
-        res.cookie('dashId', userObj.dashId);
+        res.cookie('userID', userObj.userID);
         resolve(true);
       }
     }
