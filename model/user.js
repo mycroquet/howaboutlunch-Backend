@@ -48,12 +48,35 @@ module.exports = {
         })
 
     },
-    getPoll: function(id) {
-        return knex('poll').where('poll.id', 6)
-            .join('poll_result', 'poll_result.poll_id', '=', 'poll.id')
-            .select('poll.title', 'poll.id', 'poll.poll_url', 'poll_result.name', 'poll_result.votes')
+    getPoll: function(pollId) {
+      console.log(pollId);
+      return knex('poll').where('poll_url', pollId).first()
+              .then(function(poll){
+                  return knex('poll_result').where('poll_id', poll.id)
+              })
+
+            // .join('poll_result', 'poll_result.poll_id', '=', 'poll.id')
+            // .select('poll.title', 'poll.id', 'poll.poll_url', 'poll_result.name', 'poll_result.votes')
+    },
+    castVote: function(poll_url, result_id) {
+      console.log('RESULT ID');
+      console.log(typeof result_id);
+       return knex('poll')
+           .join('poll_result', 'poll_result.poll_id', '=', 'poll.id')
+           .select('*')
+           .where('poll.poll_url', poll_url)
+          .then(function(poll_result){
+            // console.log('POLL RESULT');
+            // console.log(poll_result);
+             return knex('poll_result')
+                 .where('id', parseInt(result_id))
+                 .update('votes', poll_result[0].votes + 1)
+           })
+    },
+    pollResults: function(url) {
+      return knex('poll_result')
+              .join('poll', 'poll.id', 'poll_result.poll_id')
+              .select('poll.poll_url', 'poll_result.name', 'poll_result.votes')
+              .where('poll.poll_url', url)
     }
-    // castVote: function(voteInfo, place_id) {
-    //     return knex.raw("UPDATE poll_results SET votes += 1 WHERE place_id = "la-mexicana-taqueria-at-highlands-denver-3" AND WHERE poll_id = 9;")
-    // }
 }

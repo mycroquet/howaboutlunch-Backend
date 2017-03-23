@@ -91,21 +91,31 @@ router.post('/poll', function(req, res, next) {
 
 /* GET Poll */
 router.get('/poll/:id', function(req, res, next) {
-    userModel.getPoll(6)
-        .then(poll => {
+    //console.log(req.params);
+    userModel.getPoll(req.params.id)
+        .then(results => {
+            res.json(results)
+        })
+})
+
+/* Increment vote record */
+router.post('/vote/:id', function(req, res, next) {
+  // console.log(req.body);
+    userModel.castVote(req.body.poll_url, Number(req.body.result_id))
+        .then(voteInfo => {
             res.json({
-              poll
+                voteInfo
             })
         })
 })
 
-router.patch('/poll:id', function(req, res, next) {
-    userModel.castVote(req.params.id)
-              .then(voteInfo => {
-                res.json({
-                  voteInfo
-                })
-              })
+/* Get Results */
+router.get('/results/:poll_url', function(req, res, next) {
+  console.log('HELLOOOOO');
+        userModel.pollResults(req.params.poll_url)
+            .then(results => {
+                res.json(results)
+            })
 })
 
 module.exports = router;
