@@ -17,12 +17,14 @@ router.get('/', function(req, res, next) {
     })
 });
 
-/* Load Profile info*/
-router.get('/profile', function(req, res, next) {
+/* GET user info for Profile */
+router.get('/profile/:id', function(req, res, next) {
+  console.log(req.params.id);
     userModel.userProfile(req.params.id)
-        .then(email => {
-            userModel.userProfile(email[0].email)
-                .then(results => {
+        .then(function(email) {
+
+            userModel.userProfile(user.email)
+                .then(function(results) {
                     res.json({
                         userInfo: results
                     })
@@ -34,13 +36,14 @@ router.get('/profile', function(req, res, next) {
 /* Create User */
 router.post('/signup', function(req, res, next) {
         var userInfo = {
-            email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, 10)
+            email: req.user.email,
+            password: bcrypt.hashSync(req.user.password, 10)
         }
 
         user.createUser(userInfo)
             .then(function(result) {
                 var userId = result[0];
+                delete userInfo.password
 
                 setCookie(res, {
                     profileId: userId
