@@ -91,7 +91,7 @@ router.post('/poll', function(req, res, next) {
 
 /* GET Poll */
 router.get('/poll/:id', function(req, res, next) {
-    userModel.getPoll(43)
+    userModel.getPoll(6)
         .then(poll => {
             res.json({
               poll

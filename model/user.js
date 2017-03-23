@@ -49,7 +49,7 @@ module.exports = {
 
     },
     getPoll: function(id) {
-        return knex('poll').where('poll.id', 43)
+        return knex('poll').where('poll.id', 6)
             .join('poll_result', 'poll_result.poll_id', '=', 'poll.id')
             .select('poll.title', 'poll.id', 'poll.poll_url', 'poll_result.name', 'poll_result.votes')
     }
