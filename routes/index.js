@@ -60,13 +60,17 @@ router.get('/logout', function(req, res, next) {
 router.get('/places', function(req, res, next) {
 
     yelp.getPlace({
-            term: 'food',
+            term: 'restaurants',
             latitude: req.query.latitude,
             longitude: req.query.longitude,
             radius: '500'
         })
         .then(function(data) {
-            res.json(data)
+
+          data.businesses.sort(function(a,b){
+            return a.distance - b.distance;
+          });
+            res.json(data.businesses);
         })
         .catch(function(err) {
             console.error(err);
@@ -76,7 +80,6 @@ router.get('/places', function(req, res, next) {
 
 /* Create Poll */
 router.post('/poll', function(req, res, next) {
-    console.log(req.body);
     userModel.createPoll({
             title: req.body.title,
             poll_url: guid.create().value,
@@ -84,7 +87,6 @@ router.post('/poll', function(req, res, next) {
             user_id: 1
         }, req.body.places)
         .then(function(result) {
-            console.log(result);
             res.json(result)
         })
 })
@@ -111,7 +113,6 @@ router.post('/vote/:id', function(req, res, next) {
 
 /* Get Results */
 router.get('/results/:poll_url', function(req, res, next) {
-  console.log('HELLOOOOO');
         userModel.pollResults(req.params.poll_url)
             .then(results => {
                 res.json(results)
